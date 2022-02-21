@@ -12,6 +12,9 @@ For your solution to be accepted it is required that your application is able to
 - [ ] The user should be able to create new reviews
 - [ ] The user should be able to edit their own reviews
 
+## My own Goals
+- [ ] The user should be able to delete their own reviews
+
 <!-- 
 Anything else is up to you (animations, assets, 3rd party dependencies, etc). We will consider all your additions so don't stick to the minimum!
 Good luck! -->
