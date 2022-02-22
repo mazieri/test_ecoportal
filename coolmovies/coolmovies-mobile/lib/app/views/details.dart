@@ -74,78 +74,68 @@ class DetailsPage extends StatelessWidget {
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 itemBuilder: (_, index) {
                   return Center(
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(
-                          _,
-                          "/details",
-                          arguments: result,
-                        );
-                      },
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.all(0),
-                            padding: const EdgeInsets.all(0),
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  result.data!["allMovies"]["nodes"][i]
-                                      ["imgUrl"],
-                                ),
-                                fit: BoxFit.cover,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.all(0),
+                          padding: const EdgeInsets.all(0),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(
+                                result.data!["allMovies"]["nodes"][i]["imgUrl"],
                               ),
+                              fit: BoxFit.cover,
                             ),
-                            width: double.infinity,
-                            height: h * 0.795,
                           ),
-                          Container(
-                            height: h * 0.8,
-                            width: double.infinity,
-                            decoration: themeSystem == Brightness.dark
-                                ? BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.bottomCenter,
-                                      end: Alignment.topCenter,
-                                      colors: [
-                                        Colors.black,
-                                        Colors.black.withOpacity(0.75),
-                                        Colors.transparent,
-                                      ],
-                                    ),
-                                  )
-                                : BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.bottomCenter,
-                                      end: Alignment.topCenter,
-                                      colors: [
-                                        Colors.white,
-                                        Colors.white.withOpacity(0.75),
-                                        Colors.transparent,
-                                      ],
-                                    ),
+                          width: double.infinity,
+                          height: h * 0.795,
+                        ),
+                        Container(
+                          height: h * 0.8,
+                          width: double.infinity,
+                          decoration: themeSystem == Brightness.dark
+                              ? BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.bottomCenter,
+                                    end: Alignment.topCenter,
+                                    colors: [
+                                      Colors.black,
+                                      Colors.black.withOpacity(0.75),
+                                      Colors.transparent,
+                                    ],
                                   ),
-                          ),
-                          SizedBox(
-                            height: h * 0.8,
-                            child: Align(
-                              alignment: const Alignment(0, 0.75),
-                              child: Text(
-                                result.data!["allMovies"]["nodes"][i]["title"],
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.majorMonoDisplay(
-                                  fontSize: h * 0.06,
-                                  fontWeight: FontWeight.bold,
-                                  color: themeSystem == Brightness.dark
-                                      ? Colors.white
-                                      : Colors.black,
+                                )
+                              : BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.bottomCenter,
+                                    end: Alignment.topCenter,
+                                    colors: [
+                                      Colors.white,
+                                      Colors.white.withOpacity(0.75),
+                                      Colors.transparent,
+                                    ],
+                                  ),
                                 ),
+                        ),
+                        SizedBox(
+                          height: h * 0.8,
+                          child: Align(
+                            alignment: const Alignment(0, 0.75),
+                            child: Text(
+                              result.data!["allMovies"]["nodes"][i]["title"],
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.majorMonoDisplay(
+                                fontSize: h * 0.06,
+                                fontWeight: FontWeight.bold,
+                                color: themeSystem == Brightness.dark
+                                    ? Colors.white
+                                    : Colors.black,
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   );
                 });
