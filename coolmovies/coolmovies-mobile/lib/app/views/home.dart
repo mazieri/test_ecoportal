@@ -7,7 +7,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var w = MediaQuery.of(context).size.width;
+    // var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
     var themeSystem = Theme.of(context).brightness;
 
@@ -78,7 +78,10 @@ class HomePage extends StatelessWidget {
                 itemBuilder: (_, index) {
                   return Center(
                     child: GestureDetector(
-                      onTap: () => Navigator.pushNamed(_, "/details"),
+                      onTap: () {
+                        print(index);
+                        Navigator.pushNamed(_, "/details", arguments: index);
+                      },
                       child: Stack(
                         alignment: Alignment.center,
                         children: [

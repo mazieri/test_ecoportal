@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:coolmovies/export_pages.dart';
+import 'package:coolmovies/app/routes.dart';
 
 class ThemePage extends StatelessWidget {
   const ThemePage({Key? key}) : super(key: key);
@@ -35,11 +35,8 @@ class ThemePage extends StatelessWidget {
           brightness: Brightness.dark,
         ),
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const HomePage(),
-        '/details': (context) => const DetailsPage(movie: 1),
-      },
+      initialRoute: "/",
+      onGenerateRoute: RoutesGenerate.onGenerateRoute,
     );
   }
 }

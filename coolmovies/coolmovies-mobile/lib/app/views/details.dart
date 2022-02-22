@@ -9,7 +9,7 @@ class DetailsPage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Container(
-          child: Text('details'),
+          child: Text(movie.toString()),
         ),
       ),
     );
