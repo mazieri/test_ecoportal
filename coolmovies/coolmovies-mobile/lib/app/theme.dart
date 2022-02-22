@@ -14,9 +14,9 @@ class ThemePage extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
         colorScheme: const ColorScheme.light(
-          primary: Colors.green,
+          // primary: Colors.white,
           // primaryVariant: primaryVariant,
-          secondary: Colors.green,
+          // secondary: Colors.white,
           // secondaryVariant: secondaryVariant,
           // surface: Colors.black,
           // background: Colors.black,
