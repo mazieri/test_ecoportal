@@ -11,7 +11,9 @@ class RoutesGenerate {
         );
       case "/details":
         return MaterialPageRoute(
-          builder: (_) => DetailsPage(movie: settings.arguments),
+          builder: (_) => DetailsPage(
+            i: settings.arguments,
+          ),
         );
       default:
         return _erroRota();
