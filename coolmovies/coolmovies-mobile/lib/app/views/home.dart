@@ -6,6 +6,12 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var w = MediaQuery.of(context).size.width;
+    var h = MediaQuery.of(context).size.height;
+    var themeSystem = Theme.of(context).brightness;
+
+    print(themeSystem);
+
     const allInfosQuery = """query allInfos {
         allMovies {
           totalCount
@@ -43,15 +49,19 @@ class HomePage extends StatelessWidget {
       body: Query(
         options: QueryOptions(
           document: gql(allInfosQuery),
+          errorPolicy: ErrorPolicy.none,
         ),
-        builder: (QueryResult result, {fetchMore, refetch}) {
+        builder: (result, {fetchMore, refetch}) {
           if (result.hasException) {
+            print("error");
             return Text(result.exception.toString());
           }
           if (result.isLoading) {
+            print("loading");
             return const Center(child: CircularProgressIndicator());
           }
           if (result.data == null) {
+            print("no data");
             return const Center(child: Text('No data'));
           }
 
@@ -61,12 +71,48 @@ class HomePage extends StatelessWidget {
           return ListView.separated(
               itemCount: result.data!.length,
               separatorBuilder: (_, index) => const Divider(
-                    color: Colors.black,
+                    color: Colors.transparent,
+                    height: 10,
                   ),
               itemBuilder: (_, index) {
                 return Center(
-                  child: Text(
-                    result.data!["allMovies"]["nodes"][index]["title"],
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          result.data!["allMovies"]["nodes"][index]["imgUrl"],
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    width: double.infinity,
+                    height: h * 0.8,
+                    child: Container(
+                      height: h * 0.8,
+                      width: double.infinity,
+                      decoration: themeSystem == Brightness.dark
+                          ? const BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.bottomCenter,
+                                end: Alignment.topCenter,
+                                colors: [
+                                  Colors.black,
+                                  Colors.transparent,
+                                ],
+                              ),
+                            )
+                          : const BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.bottomCenter,
+                                end: Alignment.topCenter,
+                                colors: [
+                                  Colors.white,
+                                  Colors.transparent,
+                                ],
+                              ),
+                            ),
+                    ),
                   ),
                 );
               });
@@ -75,3 +121,22 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
+// Text(
+//                     result.data!["allMovies"]["nodes"][index]["title"],
+//                   ),
+
+// Stack(
+//                       children: const [
+//                         Align(
+//                           alignment: Alignment(0, 0),
+//                           child: Text(
+//                             "Movie Title",
+//                             style: TextStyle(
+//                                 fontSize: 30,
+//                                 fontWeight: FontWeight.bold,
+//                                 color: Colors.white),
+//                           ),
+//                         )
+//                       ],
+//                     ),

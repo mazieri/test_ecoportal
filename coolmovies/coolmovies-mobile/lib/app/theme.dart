@@ -12,13 +12,14 @@ class ThemePage extends StatelessWidget {
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
         colorScheme: const ColorScheme.light(
           primary: Colors.green,
           // primaryVariant: primaryVariant,
           secondary: Colors.green,
           // secondaryVariant: secondaryVariant,
-          // surface: surface,
-          // background: background,
+          // surface: Colors.black,
+          // background: Colors.black,
           // error: error,
           // onPrimary: onPrimary,
           // onSecondary: onSecondary,
@@ -29,6 +30,7 @@ class ThemePage extends StatelessWidget {
         ),
       ),
       darkTheme: ThemeData(
+        scaffoldBackgroundColor: Colors.black,
         colorScheme: const ColorScheme.dark(
           brightness: Brightness.dark,
         ),
