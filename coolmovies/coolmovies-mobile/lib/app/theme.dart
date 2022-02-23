@@ -14,7 +14,7 @@ class ThemePage extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
         colorScheme: const ColorScheme.light(
-          // primary: Colors.white,
+          primary: Colors.black,
           // primaryVariant: primaryVariant,
           // secondary: Colors.white,
           // secondaryVariant: secondaryVariant,
@@ -32,6 +32,7 @@ class ThemePage extends StatelessWidget {
       darkTheme: ThemeData(
         scaffoldBackgroundColor: Colors.black,
         colorScheme: const ColorScheme.dark(
+          primary: Colors.white,
           brightness: Brightness.dark,
         ),
       ),
