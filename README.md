@@ -6,9 +6,9 @@ DO NOT USE EXISTING TEMPLATES. You can copy the design but not the code, we have
 For your solution to be accepted it is required that your application is able to: -->
 
 - [x] List all the available movies, showing at least the title
-- [ ] Tapping on a movie must open a view page presenting all the available information to the user
-- [ ] Each movie page must display all its reviews
-- [ ] Each review should consist of (at least): title, body and stars (1-5)
+- [x] Tapping on a movie must open a view page presenting all the available information to the user
+- [x] Each movie page must display all its reviews
+- [x] Each review should consist of (at least): title, body and stars (1-5)
 - [ ] The user should be able to create new reviews
 - [ ] The user should be able to edit their own reviews
 
