@@ -8,7 +8,7 @@ class DetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // var w = MediaQuery.of(context).size.width;
+    var w = MediaQuery.of(context).size.width;
     var h = MediaQuery.of(context).size.height;
     var themeSystem = Theme.of(context).brightness;
 
@@ -42,14 +42,74 @@ class DetailsPage extends StatelessWidget {
             }
           }
         }
+        currentUser {
+          id
+          name
+        }
       }
       """;
 
+    const newReviewMutation = """
+  mutation {
+  createMovieReview(input: {
+    movieReview: {
+      title: "blah blah blah",
+      body: "eu fazendo um teste",
+      rating: 1,
+      movieId: "70351289-8756-4101-bf9a-37fc8c7a82cd",
+      userReviewerId: "beb2473b-2c31-44a2-81e3-01efd5c7ac6e"
+    }})
+  {
+    movieReview {
+      id
+      title
+      body
+      rating
+      movieByMovieId {
+        title
+      }
+      userByUserReviewerId {
+        name
+      }
+    }
+  }
+}
+""";
+
+// void _removeReview(context, )
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pop(context),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+              title: const Text("Your Moview Review"),
+              actions: [
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.done),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.cancel_outlined),
+                ),
+              ],
+              content: TextField(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "Review Title",
+                ),
+                onChanged: (value) {
+                  print(value);
+                },
+              ),
+            ),
+          );
+          // Mutation(options: MutationOptions(document: gql(newReviewMutation)), builder: builder);
+        },
         child: const Icon(
-          Icons.arrow_left_outlined,
+          Icons.edit_note,
           size: 50,
         ),
         backgroundColor:
@@ -209,6 +269,24 @@ class DetailsPage extends StatelessWidget {
                                 ),
                               ),
                             ),
+                            SizedBox(
+                              height: h * 0.8,
+                              child: Align(
+                                alignment: const Alignment(0, 1),
+                                child: Text(
+                                  result.data!["allMovies"]["nodes"][i]
+                                      ["title"],
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.majorMonoDisplay(
+                                    fontSize: h * 0.02,
+                                    fontWeight: FontWeight.bold,
+                                    color: themeSystem == Brightness.dark
+                                        ? Colors.white
+                                        : Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                         SizedBox(
@@ -217,7 +295,7 @@ class DetailsPage extends StatelessWidget {
                           child: Align(
                             alignment: const Alignment(-1, -0.9),
                             child: ElevatedButton(
-                              onPressed: () => print("oi"),
+                              onPressed: () => Navigator.pop(context),
                               style: ElevatedButton.styleFrom(
                                   shape: const CircleBorder()),
                               child: Icon(
@@ -273,6 +351,25 @@ class DetailsPage extends StatelessWidget {
                     //   },
                     //   child: Text("ausasuhsauh"),
                     // ),
+                    Divider(
+                      thickness: 2,
+                      // height: h * 0.0,
+                      color: themeSystem == Brightness.dark
+                          ? Colors.white
+                          : Colors.black,
+                    ),
+                    Text(
+                      "Movie Reviws",
+                      style: GoogleFonts.lato(
+                        fontSize: h * 0.04,
+                        color: themeSystem == Brightness.dark
+                            ? Colors.white
+                            : Colors.black,
+                      ),
+                    ),
+                    const Divider(
+                      color: Colors.transparent,
+                    ),
                     Column(
                       children: [
                         for (var d =
@@ -285,80 +382,164 @@ class DetailsPage extends StatelessWidget {
                             d++)
                           Card(
                             child: SizedBox(
-                              // height: h * 0.1,
                               width: double.infinity,
                               child: Center(
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Text(
-                                          result.data!["allMovies"]["nodes"][i]
-                                                      ["movieReviewsByMovieId"]
-                                                  ["nodes"][d]
-                                              ["userByUserReviewerId"]["name"],
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.lato(
-                                            fontSize: h * 0.03,
-                                            fontWeight: FontWeight.bold,
-                                            color:
-                                                themeSystem == Brightness.dark
-                                                    ? Colors.white
-                                                    : Colors.black,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Text(
+                                            result.data!["allMovies"]["nodes"]
+                                                            [i]
+                                                        [
+                                                        "movieReviewsByMovieId"]
+                                                    ["nodes"][d][
+                                                "userByUserReviewerId"]["name"],
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.lato(
+                                              fontSize: h * 0.03,
+                                              fontWeight: FontWeight.bold,
+                                              color:
+                                                  themeSystem == Brightness.dark
+                                                      ? Colors.white
+                                                      : Colors.black,
+                                            ),
                                           ),
-                                        ),
-                                        Text(
-                                          result.data!["allMovies"]["nodes"][i]
-                                                  ["movieReviewsByMovieId"]
-                                                  ["nodes"][d]["rating"]
-                                              .toString(),
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.lato(
-                                            fontSize: h * 0.03,
-                                            fontWeight: FontWeight.bold,
-                                            color:
-                                                themeSystem == Brightness.dark
-                                                    ? Colors.white
-                                                    : Colors.black,
+                                          Text(
+                                            result.data!["allMovies"]["nodes"]
+                                                    [i]["movieReviewsByMovieId"]
+                                                    ["nodes"][d]["rating"]
+                                                .toString(),
+                                            textAlign: TextAlign.center,
+                                            style: GoogleFonts.lato(
+                                              fontSize: h * 0.03,
+                                              fontWeight: FontWeight.bold,
+                                              color:
+                                                  themeSystem == Brightness.dark
+                                                      ? Colors.white
+                                                      : Colors.black,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    const Divider(),
-                                    Text(
-                                      result.data!["allMovies"]["nodes"][i]
-                                              ["movieReviewsByMovieId"]["nodes"]
-                                          [d]["title"],
-                                      textAlign: TextAlign.center,
-                                      style: GoogleFonts.lato(
-                                        fontSize: h * 0.03,
-                                        fontWeight: FontWeight.bold,
-                                        color: themeSystem == Brightness.dark
-                                            ? Colors.white
-                                            : Colors.black,
+                                        ],
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(5),
-                                      child: Text(
+                                      const Divider(),
+                                      Text(
                                         result.data!["allMovies"]["nodes"][i]
                                                 ["movieReviewsByMovieId"]
-                                            ["nodes"][d]["body"],
+                                            ["nodes"][d]["title"],
                                         textAlign: TextAlign.center,
                                         style: GoogleFonts.lato(
-                                          fontSize: h * 0.02,
+                                          fontSize: h * 0.03,
+                                          fontWeight: FontWeight.bold,
                                           color: themeSystem == Brightness.dark
                                               ? Colors.white
                                               : Colors.black,
                                         ),
                                       ),
-                                    ),
-                                    const Divider(
-                                      color: Colors.transparent,
-                                    ),
-                                  ],
+                                      Padding(
+                                        padding: const EdgeInsets.all(5),
+                                        child: Text(
+                                          result.data!["allMovies"]["nodes"][i]
+                                                  ["movieReviewsByMovieId"]
+                                              ["nodes"][d]["body"],
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.lato(
+                                            fontSize: h * 0.02,
+                                            color:
+                                                themeSystem == Brightness.dark
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                      const Divider(
+                                        color: Colors.transparent,
+                                      ),
+                                      result.data!["currentUser"]["id"] ==
+                                              result.data!["allMovies"]["nodes"]
+                                                          [i]
+                                                      ["movieReviewsByMovieId"]
+                                                  ["nodes"][d]["userReviewerId"]
+                                          ? Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                ElevatedButton(
+                                                  onPressed: () {},
+                                                  child: SizedBox(
+                                                    width: w / 3,
+                                                    child:
+                                                        const Icon(Icons.edit),
+                                                  ),
+                                                ),
+                                                ElevatedButton(
+                                                  onPressed: () {
+                                                    var reviewID = result
+                                                        .data!["allMovies"]
+                                                            ["nodes"][i][
+                                                            "movieReviewsByMovieId"]
+                                                            ["nodes"][d]["id"]
+                                                        .toString();
+
+                                                    var deleteReview = """
+                                                          mutation {
+                                                            deleteMovieReviewById(input: {
+                                                              id: "$reviewID",
+                                                              clientMutationId: "delete"}
+                                                            )
+                                                            {
+                                                              movieReview {
+                                                                id
+                                                              }
+                                                            }
+                                                          }""";
+
+                                                    print("apagando");
+                                                    print(deleteReview);
+                                                    print(reviewID);
+
+                                                    Mutation(
+                                                      options: MutationOptions(
+                                                        document:
+                                                            gql(deleteReview),
+                                                      ),
+                                                      builder:
+                                                          (runMutation, done) {
+                                                        return const AlertDialog();
+                                                      },
+                                                    );
+
+                                                    // Mutation(
+                                                    //   options: MutationOptions(
+                                                    //     document:
+                                                    //         gql(deleteReview),
+                                                    //   ),
+                                                    //   builder: (MultiSourceResult Function(
+                                                    //               Map<String,
+                                                    //                   dynamic>,
+                                                    //               {Object?
+                                                    //                   optimisticResult})
+                                                    //           runMutation,
+                                                    //       QueryResult? result) {
+                                                    //     return const AlertDialog();
+                                                    //   },
+                                                    // );
+                                                  },
+                                                  child: SizedBox(
+                                                    width: w / 3,
+                                                    child: const Icon(
+                                                        Icons.delete_forever),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          : const SizedBox(),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -381,36 +562,3 @@ class DetailsPage extends StatelessWidget {
     );
   }
 }
-
-// Container(
-//                             height: h * 0.8,
-//                             width: double.infinity,
-//                             decoration: themeSystem == Brightness.dark
-//                                 ? BoxDecoration(
-//                                     gradient: LinearGradient(
-//                                       begin: Alignment.bottomCenter,
-//                                       end: Alignment.topCenter,
-//                                       colors: [
-//                                         Colors.black,
-//                                         Colors.black.withOpacity(0.75),
-//                                         Colors.transparent,
-//                                       ],
-//                                     ),
-//                                   )
-//                                 : BoxDecoration(
-//                                     gradient: LinearGradient(
-//                                       begin: Alignment.bottomCenter,
-//                                       end: Alignment.topCenter,
-//                                       colors: [
-//                                         Colors.white,
-//                                         Colors.white.withOpacity(0.75),
-//                                         Colors.transparent,
-//                                       ],
-//                                     ),
-//                                   ),
-//                           ),
-
-
-// themeSystem == Brightness.dark
-//                                   ? Colors.black
-//                                   : Colors.white,
